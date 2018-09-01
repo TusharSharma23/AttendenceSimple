@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="sub_left_margin">16dp</dimen>
+
+    <dimen name="not_attended_right_margin">16dp</dimen>
+
+    <dimen name="attended_right_margin">8dp</dimen>
+
+</resources>

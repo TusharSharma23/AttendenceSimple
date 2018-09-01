@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Attendance Manager</string>
+
+    <string name="EntryActivity">Details</string>
+
+    <string name="subject">Subject name</string>
+
+    <string name="attended">Attended</string>
+
+    <string name="not_attended">Not Attended</string>
+
+    <string name="submit_button">Submit</string>
+
+    <string name="cancel_button">Cancel</string>
+</resources>
