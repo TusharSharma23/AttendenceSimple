@@ -31,15 +31,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 DataContract.DAILY_SCHEDULE_CODE + " TEXT NOT NULL);";
         db.execSQL(query);
 
-        insertSub(db);
-        insertSch(db);
+        insertSubjectTableContents(db);
+        insertScheduleTableContents(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     }
 
-    private void insertSub(SQLiteDatabase db) {
+    private void insertSubjectTableContents(SQLiteDatabase db) {
         ContentValues values = new ContentValues();
         values.put(DataContract.SUBJECT_SUB_NAME, "Algorithm Design");
         db.insert(DataContract.SUBJECT_TABLE, null, values);
@@ -85,7 +85,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(DataContract.SUBJECT_TABLE, null, values);
     }
 
-    private void insertSch(SQLiteDatabase db) {
+    private void insertScheduleTableContents(SQLiteDatabase db) {
         ContentValues values = new ContentValues();
         values.put(DataContract.DAILY_SCHEDULE_CODE, "4!5!1!3!2!10");
         db.insert(DataContract.DAILY_SCHEDULE_TABLE, null, values);

@@ -5,19 +5,19 @@ import java.io.Serializable;
 public class SubjectPercent implements Serializable{
 
     private String subject;
-    private int notAttended;
+    private int attended;
     private int total;
     private double percentage;
 
     public SubjectPercent(String subject, int notAttended, int total) {
         this.subject = subject;
-        this.notAttended = notAttended;
         this.total = total;
+        this.attended = total - notAttended;
         this.percentage = setPercentage();
     }
 
     private double setPercentage() {
-        return ((total - notAttended)/(double)total) * 100;
+        return Math.round (((attended/(double)total) * 100)*100.0)/100.0;
     }
 
     public String getSubject() {
@@ -32,7 +32,7 @@ public class SubjectPercent implements Serializable{
         return total;
     }
 
-    public int getNotAttended() {
-        return notAttended;
+    public int getAttended() {
+        return attended;
     }
 }
