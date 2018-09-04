@@ -19,8 +19,9 @@
         <activity android:name=".Details"
             android:parentActivityName=".MainActivity"
             android:label="@string/EntryActivity">
-
         </activity>
+        <activity android:name=".PerSubjectDetail" />
+        <activity android:name=".Record" />
     </application>
 
 </manifest>

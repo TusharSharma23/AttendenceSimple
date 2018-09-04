@@ -6,4 +6,13 @@
 
     <dimen name="attended_right_margin">8dp</dimen>
 
+    <dimen name="detail_subject">45sp</dimen>
+
+    <dimen name="detail_subject_margin">10dp</dimen>
+
+    <dimen name="detail_fontSize">25sp</dimen>
+
+    <dimen name="detail_margin">40dp</dimen>
+
+    <dimen name="detail_percent_size">80sp</dimen>
 </resources>
