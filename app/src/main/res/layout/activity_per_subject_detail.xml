@@ -45,6 +45,7 @@
             android:layout_marginEnd="@dimen/detail_subject_margin"/>
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/details_values"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/detail_subject_margin"
@@ -65,7 +66,7 @@
             android:layout_weight="1"
             android:gravity="right"
             android:textSize="@dimen/detail_fontSize"
-            android:layout_marginEnd="@dimen/detail_subject_margin"/>
+            android:layout_marginEnd="@dimen/detail_subject_margin" />
 
     </LinearLayout>
 
@@ -73,10 +74,11 @@
         android:id="@+id/per_subject_percent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/detail_margin"
         android:layout_marginBottom="@dimen/detail_margin"
         android:textSize="@dimen/detail_percent_size"
-        android:layout_centerInParent="true" />
+        android:layout_centerInParent="true"
+        android:layout_below="@id/details_values"/>
 
 
 </RelativeLayout>

@@ -20,8 +20,13 @@
             android:parentActivityName=".MainActivity"
             android:label="@string/EntryActivity">
         </activity>
-        <activity android:name=".PerSubjectDetail" />
-        <activity android:name=".Record" />
+        <activity android:name=".Record"
+            android:parentActivityName=".MainActivity"
+            android:label="@string/records_title"/>
+        <activity android:name=".PerSubjectDetail"
+            android:parentActivityName=".Record"
+            android:label="@string/per_subject_title"/>
+
     </application>
 
 </manifest>

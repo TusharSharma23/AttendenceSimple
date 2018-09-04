@@ -3,6 +3,10 @@
 
     <string name="EntryActivity">Details</string>
 
+    <string name="records_title">Previous Records</string>
+
+    <string name="per_subject_title">Subject Detail</string>
+
     <string name="subject">Subject name</string>
 
     <string name="attended">Attended</string>
