@@ -28,7 +28,7 @@ public class Details extends AppCompatActivity {
 
     private ListView listView;
 
-    public static String arr[];
+    public static String todaysClasses[];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class Details extends AppCompatActivity {
 
         listView = findViewById(R.id.subject_list);
         String todaysList = getList(day);
-        arr = todaysList.split("!");
+        todaysClasses = todaysList.split("!");
         ArrayList<String> arrayList = formList(todaysList);
         SubjectAdapter adapter = new SubjectAdapter(this, arrayList);
         listView.setAdapter(adapter);
@@ -76,7 +76,7 @@ public class Details extends AppCompatActivity {
         Cursor cursor = db.query(DataContract.DAILY_SCHEDULE_TABLE,
                 new String[]{DataContract.DAILY_SCHEDULE_CODE},
                 DataContract._ID + " = ?",
-                new String[] {String.valueOf(day)},
+                new String[]{String.valueOf(day)},
                 null,
                 null,
                 null);
@@ -87,7 +87,7 @@ public class Details extends AppCompatActivity {
     private ArrayList formList(String string) {
         SQLiteDatabase db = helper.getReadableDatabase();
         String arr[] = string.split("!");
-        for(int i = 0; i < arr.length; i++) {
+        for (int i = 0; i < arr.length; i++) {
             Cursor cursor = db.query(DataContract.SUBJECT_TABLE,
                     new String[]{DataContract.SUBJECT_SUB_NAME},
                     DataContract._ID + " = ?",
@@ -98,70 +98,47 @@ public class Details extends AppCompatActivity {
             cursor.moveToFirst();
             arr[i] = cursor.getString(cursor.getColumnIndex(DataContract.SUBJECT_SUB_NAME));
         }
-        return new ArrayList<String>(Arrays.asList(arr));
+        return new ArrayList<>(Arrays.asList(arr));
     }
 
     private void performTask(int finalDateCode) {
-        if(!builder.toString().equals("")) {
-            if(builder.charAt(builder.length() - 1) == '!') {
-                builder.deleteCharAt(builder.length() - 1);
-                SQLiteDatabase db = helper.getWritableDatabase();
-                ContentValues values = new ContentValues();
-                values.put(DataContract.NOT_ATTENDED_DATE, finalDateCode);
-                values.put(DataContract.NOT_ATTENDED_CODE, builder.toString());
-                db.insert(DataContract.NOT_ATTENDED_TABLE, null, values);
-                Log.i(" Inserted code", builder.toString());
+        if (builder.length()!=0) {
+            builder.deleteCharAt(builder.length() - 1);
+        }
+        SQLiteDatabase db = helper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(DataContract.NOT_ATTENDED_DATE, finalDateCode);
+        values.put(DataContract.NOT_ATTENDED_CODE, builder.toString());
+        db.insert(DataContract.NOT_ATTENDED_TABLE, null, values);
+        Log.i(" Inserted code", builder.toString());
 
-                SQLiteDatabase db1 = helper.getReadableDatabase();
+        SQLiteDatabase db1 = helper.getReadableDatabase();
 
-                for (int i = 0; i < arr.length; i++) {
-                    Cursor cursor = db1.query(DataContract.SUBJECT_TABLE,
-                            new String[]{DataContract.SUBJECT_TOT_CLASSES, DataContract.SUBJECT_NOT_ATTENDED},
-                            DataContract._ID + " = ?",
-                            new String[]{arr[i]},
-                            null,
-                            null,
-                            null);
-                    cursor.moveToFirst();
-                    int notAttended = cursor.getInt(cursor.getColumnIndex(DataContract.SUBJECT_NOT_ATTENDED));
-                    int total = cursor.getInt(cursor.getColumnIndex(DataContract.SUBJECT_TOT_CLASSES));
-                    Toast.makeText(this, total+ " "+notAttended, Toast.LENGTH_SHORT).show();
-                    total++;notAttended++;
-                    Log.i(" Total classes attended", total + "");
-                    Log.i(" classes not attended", notAttended + "");
-                    values = new ContentValues();
-                    values.put(DataContract.SUBJECT_NOT_ATTENDED, notAttended);
-                    values.put(DataContract.SUBJECT_TOT_CLASSES, total);
-                    db.update(DataContract.SUBJECT_TABLE,
-                            values,
-                            DataContract._ID + " = ?",
-                            new String[]{arr[i]});
-                }
+        for (int i = 0; i < todaysClasses.length; i++) {
+            Cursor cursor = db1.query(DataContract.SUBJECT_TABLE,
+                    new String[]{DataContract.SUBJECT_TOT_CLASSES, DataContract.SUBJECT_NOT_ATTENDED},
+                    DataContract._ID + " = ?",
+                    new String[]{todaysClasses[i]},
+                    null,
+                    null,
+                    null);
+            cursor.moveToFirst();
+
+            int total = cursor.getInt(cursor.getColumnIndex(DataContract.SUBJECT_TOT_CLASSES));
+            total++;
+            Log.i(" Total classes attended", total + "");
+            values = new ContentValues();
+            if (builder.toString().contains(todaysClasses[i])) {
+                int notAttended = cursor.getInt(cursor.getColumnIndex(DataContract.SUBJECT_NOT_ATTENDED));
+                notAttended++;
+                Log.i(" Not Attended ", notAttended+"");
+                values.put(DataContract.SUBJECT_NOT_ATTENDED, notAttended);
             }
-        } else {
-            SQLiteDatabase db = helper.getWritableDatabase();
-            ContentValues values;
-            SQLiteDatabase db1 = helper.getReadableDatabase();
-            for (int i = 0; i < arr.length; i++) {
-                Cursor cursor = db1.query(DataContract.SUBJECT_TABLE,
-                        new String[]{DataContract.SUBJECT_TOT_CLASSES, DataContract.SUBJECT_NOT_ATTENDED},
-                        DataContract._ID + " = ?",
-                        new String[]{arr[i]},
-                        null,
-                        null,
-                        null);
-                cursor.moveToFirst();
-                int total = cursor.getInt(cursor.getColumnIndex(DataContract.SUBJECT_TOT_CLASSES));
-                total++;
-                Log.i(" Total classes attended", total + "");
-                values = new ContentValues();
-                values.put(DataContract.SUBJECT_TOT_CLASSES, total);
-                db.update(DataContract.SUBJECT_TABLE,
-                        values,
-                        DataContract._ID + " = ?",
-                        new String[]{arr[i]});
-            }
-            Log.i(" Attended this", " In else block");
+            values.put(DataContract.SUBJECT_TOT_CLASSES, total);
+            db.update(DataContract.SUBJECT_TABLE,
+                    values,
+                    DataContract._ID + " = ?",
+                    new String[]{todaysClasses[i]});
         }
         NavUtils.navigateUpFromSameTask(Details.this);
     }

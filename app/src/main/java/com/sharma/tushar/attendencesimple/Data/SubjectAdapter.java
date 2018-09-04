@@ -44,8 +44,8 @@ public class SubjectAdapter extends ArrayAdapter {
             @Override
             public void onClick(View v) {
 
-                Details.builder.append(Details.arr[position] + "!");
-                Log.i(" Added to code", Details.arr[position] + "!");
+                Details.builder.append(Details.todaysClasses[position] + "!");
+                Log.i(" Added to code", Details.todaysClasses[position] + "!");
                 Log.i(" Buffer contains ", Details.builder.toString());
 
             }
