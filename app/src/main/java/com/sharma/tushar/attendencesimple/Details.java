@@ -118,7 +118,7 @@ public class Details extends AppCompatActivity {
                     Cursor cursor = db1.query(DataContract.SUBJECT_TABLE,
                             new String[]{DataContract.SUBJECT_TOT_CLASSES, DataContract.SUBJECT_NOT_ATTENDED},
                             DataContract._ID + " = ?",
-                            new String[]{String.valueOf(i+1)},
+                            new String[]{arr[i]},
                             null,
                             null,
                             null);
@@ -146,7 +146,7 @@ public class Details extends AppCompatActivity {
                 Cursor cursor = db1.query(DataContract.SUBJECT_TABLE,
                         new String[]{DataContract.SUBJECT_TOT_CLASSES, DataContract.SUBJECT_NOT_ATTENDED},
                         DataContract._ID + " = ?",
-                        new String[]{String.valueOf(i+1)},
+                        new String[]{arr[i]},
                         null,
                         null,
                         null);
