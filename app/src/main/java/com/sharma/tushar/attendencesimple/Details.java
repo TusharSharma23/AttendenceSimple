@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.sharma.tushar.attendencesimple.Data.DataContract;
 import com.sharma.tushar.attendencesimple.Data.DatabaseHelper;
@@ -25,8 +24,6 @@ public class Details extends AppCompatActivity {
     DatabaseHelper helper;
 
     public static StringBuffer builder = null;
-
-    private ListView listView;
 
     public static String todaysClasses[];
 
@@ -45,10 +42,10 @@ public class Details extends AppCompatActivity {
         helper = new DatabaseHelper(this);
         builder = new StringBuffer("");
 
-        listView = findViewById(R.id.subject_list);
+        ListView listView = findViewById(R.id.subject_list);
         String todaysList = getList(day);
         todaysClasses = todaysList.split("!");
-        ArrayList<String> arrayList = formList(todaysList);
+        ArrayList arrayList = formList(todaysList);
         SubjectAdapter adapter = new SubjectAdapter(this, arrayList);
         listView.setAdapter(adapter);
 
@@ -81,7 +78,9 @@ public class Details extends AppCompatActivity {
                 null,
                 null);
         cursor.moveToFirst();
-        return cursor.getString(cursor.getColumnIndex(DataContract.DAILY_SCHEDULE_CODE));
+        String list = cursor.getString(cursor.getColumnIndex(DataContract.DAILY_SCHEDULE_CODE));
+        cursor.close();
+        return list;
     }
 
     private ArrayList formList(String string) {
@@ -97,6 +96,7 @@ public class Details extends AppCompatActivity {
                     null);
             cursor.moveToFirst();
             arr[i] = cursor.getString(cursor.getColumnIndex(DataContract.SUBJECT_SUB_NAME));
+            cursor.close();
         }
         return new ArrayList<>(Arrays.asList(arr));
     }
@@ -114,11 +114,11 @@ public class Details extends AppCompatActivity {
 
         SQLiteDatabase db1 = helper.getReadableDatabase();
 
-        for (int i = 0; i < todaysClasses.length; i++) {
+        for (String todaysClass : todaysClasses) {
             Cursor cursor = db1.query(DataContract.SUBJECT_TABLE,
                     new String[]{DataContract.SUBJECT_TOT_CLASSES, DataContract.SUBJECT_NOT_ATTENDED},
                     DataContract._ID + " = ?",
-                    new String[]{todaysClasses[i]},
+                    new String[]{todaysClass},
                     null,
                     null,
                     null);
@@ -128,17 +128,18 @@ public class Details extends AppCompatActivity {
             total++;
             Log.i(" Total classes attended", total + "");
             values = new ContentValues();
-            if (builder.toString().contains(todaysClasses[i])) {
+            if (builder.toString().contains(todaysClass)) {
                 int notAttended = cursor.getInt(cursor.getColumnIndex(DataContract.SUBJECT_NOT_ATTENDED));
                 notAttended++;
-                Log.i(" Not Attended ", notAttended+"");
+                Log.i(" Not Attended ", notAttended + "");
                 values.put(DataContract.SUBJECT_NOT_ATTENDED, notAttended);
             }
             values.put(DataContract.SUBJECT_TOT_CLASSES, total);
             db.update(DataContract.SUBJECT_TABLE,
                     values,
                     DataContract._ID + " = ?",
-                    new String[]{todaysClasses[i]});
+                    new String[]{todaysClass});
+            cursor.close();
         }
         NavUtils.navigateUpFromSameTask(Details.this);
     }

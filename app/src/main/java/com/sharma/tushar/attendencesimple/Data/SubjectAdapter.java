@@ -18,8 +18,8 @@ import java.util.ArrayList;
 
 public class SubjectAdapter extends ArrayAdapter {
 
-    ArrayList<String> arrayList;
-    Context context;
+    private ArrayList arrayList;
+    private Context context;
 
     public SubjectAdapter(@NonNull Context context, ArrayList arrayList) {
         super(context, 0, arrayList);
@@ -31,7 +31,7 @@ public class SubjectAdapter extends ArrayAdapter {
     @Override
     public View getView(int pos, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = convertView;
-        String str = arrayList.get(pos);
+        String str = (String) arrayList.get(pos);
         final int position = pos;
         if(view == null)
             view = LayoutInflater.from(context).inflate(R.layout.subject_list_item, parent, false);
@@ -44,20 +44,12 @@ public class SubjectAdapter extends ArrayAdapter {
             @Override
             public void onClick(View v) {
 
-                Details.builder.append(Details.todaysClasses[position] + "!");
+                Details.builder.append(Details.todaysClasses[position]).append("!");
                 Log.i(" Added to code", Details.todaysClasses[position] + "!");
                 Log.i(" Buffer contains ", Details.builder.toString());
 
             }
         });
-        //int n = Integer.parseInt(str.substring(str.length() - 1));
-        /*
-        if(n == 1) {
-            attended.setChecked(true);
-        }else {
-            notAttended.setChecked(true);
-        }
-        */
         return view;
     }
 }
