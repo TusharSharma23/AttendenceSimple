@@ -25,4 +25,8 @@
 
     <string name="menu_previous_record">Previous Records</string>
 
+    <string name="edit_subject">Edit</string>
+
+    <string name="save_button">Save</string>
+
 </resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/per_subject_edit_menu"
+        android:title="@string/edit_subject"
+        app:showAsAction="never"
+        android:orderInCategory="1"/>
+
+</menu>
