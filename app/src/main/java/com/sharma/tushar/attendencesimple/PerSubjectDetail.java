@@ -57,8 +57,8 @@ public class PerSubjectDetail extends AppCompatActivity {
         save_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int attendedText = Integer.parseInt(attended.getText().toString());
-                int totalText = Integer.parseInt(total.getText().toString());
+                int attendedText = Integer.parseInt(attendedEdited.getText().toString());
+                int totalText = Integer.parseInt(totalEdited.getText().toString());
 
                 SQLiteDatabase db = new DatabaseHelper(PerSubjectDetail.this).getWritableDatabase();
                 ContentValues values = new ContentValues();
