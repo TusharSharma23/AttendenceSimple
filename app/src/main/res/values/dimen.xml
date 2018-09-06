@@ -15,4 +15,6 @@
     <dimen name="detail_margin">40dp</dimen>
 
     <dimen name="detail_percent_size">70sp</dimen>
+
+    <dimen name="checkbox_textsize">10sp</dimen>
 </resources>

@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -36,20 +38,36 @@ public class SubjectAdapter extends ArrayAdapter {
         if(view == null)
             view = LayoutInflater.from(context).inflate(R.layout.subject_list_item, parent, false);
         TextView sub = view.findViewById(R.id.subject_name);
-        RadioButton attended = view.findViewById(R.id.attended_button);
-        RadioButton notAttended = view.findViewById(R.id.not_attended_button);
+        final RadioButton attended = view.findViewById(R.id.attended_button);
+        final RadioButton notAttended = view.findViewById(R.id.not_attended_button);
+        final CheckBox noClass = view.findViewById(R.id.no_class);
+
         attended.setChecked(true);
         sub.setText(str);
         notAttended.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Details.builder.append(Details.todaysClasses[position]).append("!");
+                Details.notAttendedClasses.append(Details.todaysClasses[position]).append("!");
                 Log.i(" Added to code", Details.todaysClasses[position] + "!");
-                Log.i(" Buffer contains ", Details.builder.toString());
+                Log.i(" Buffer contains ", Details.notAttendedClasses.toString());
 
             }
         });
+        noClass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    Details.noClass.append(Details.todaysClasses[position] + "!");
+                    attended.setVisibility(View.INVISIBLE);
+                    notAttended.setVisibility(View.INVISIBLE);
+                } else {
+                    attended.setVisibility(View.VISIBLE);
+                    notAttended.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
         return view;
     }
 }

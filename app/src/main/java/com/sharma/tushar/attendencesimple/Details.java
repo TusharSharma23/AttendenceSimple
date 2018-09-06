@@ -23,8 +23,8 @@ public class Details extends AppCompatActivity {
 
     DatabaseHelper helper;
 
-    public static StringBuffer builder = null;
-
+    public static StringBuffer notAttendedClasses = null;
+    public static StringBuffer noClass = null;
     public static String todaysClasses[];
 
     @Override
@@ -40,7 +40,8 @@ public class Details extends AppCompatActivity {
         }
 
         helper = new DatabaseHelper(this);
-        builder = new StringBuffer("");
+        notAttendedClasses = new StringBuffer("");
+        noClass = new StringBuffer("");
 
         ListView listView = findViewById(R.id.subject_list);
         String todaysList = getList(day);
@@ -102,19 +103,17 @@ public class Details extends AppCompatActivity {
     }
 
     private void performTask(int finalDateCode) {
-        if (builder.length()!=0) {
-            builder.deleteCharAt(builder.length() - 1);
-        }
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(DataContract.NOT_ATTENDED_DATE, finalDateCode);
-        values.put(DataContract.NOT_ATTENDED_CODE, builder.toString());
+        values.put(DataContract.NOT_ATTENDED_CODE, notAttendedClasses.toString());
         db.insert(DataContract.NOT_ATTENDED_TABLE, null, values);
-        Log.i(" Inserted code", builder.toString());
+        Log.i(" Inserted code", notAttendedClasses.toString());
 
         SQLiteDatabase db1 = helper.getReadableDatabase();
 
-        for (String todaysClass : todaysClasses) {
+        for (int i = 0; i < todaysClasses.length; i++) {
+            String todaysClass = todaysClasses[i];
             Cursor cursor = db1.query(DataContract.SUBJECT_TABLE,
                     new String[]{DataContract.SUBJECT_TOT_CLASSES, DataContract.SUBJECT_NOT_ATTENDED},
                     DataContract._ID + " = ?",
@@ -124,13 +123,20 @@ public class Details extends AppCompatActivity {
                     null);
             cursor.moveToFirst();
 
+            if (noClass.toString().contains(todaysClass)) {
+                cursor.close();
+                noClass.deleteCharAt(noClass.indexOf(todaysClass));
+                i++;
+                continue;
+            }
             int total = cursor.getInt(cursor.getColumnIndex(DataContract.SUBJECT_TOT_CLASSES));
             total++;
             Log.i(" Total classes attended", total + "");
             values = new ContentValues();
-            if (builder.toString().contains(todaysClass)) {
+            if (notAttendedClasses.toString().contains(todaysClass)) {
                 int notAttended = cursor.getInt(cursor.getColumnIndex(DataContract.SUBJECT_NOT_ATTENDED));
                 notAttended++;
+                notAttendedClasses.deleteCharAt(notAttendedClasses.indexOf(todaysClass));
                 Log.i(" Not Attended ", notAttended + "");
                 values.put(DataContract.SUBJECT_NOT_ATTENDED, notAttended);
             }

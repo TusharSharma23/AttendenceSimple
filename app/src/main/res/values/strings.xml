@@ -29,4 +29,5 @@
 
     <string name="save_button">Save</string>
 
+    <string name="checkbox_message">Check if teacher absent</string>
 </resources>
