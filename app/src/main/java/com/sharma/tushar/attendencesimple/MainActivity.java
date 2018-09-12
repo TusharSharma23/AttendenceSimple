@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
                 @Override
                 public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                    int dateCode = Integer.parseInt(dayOfMonth + "" + month +"" + year);
+                    int dateCode = Integer.parseInt(year + "" + month +"" + dayOfMonth);
                     Calendar cal = new GregorianCalendar(year, month, dayOfMonth);
                     int day = cal.get(Calendar.DAY_OF_WEEK) - 1;
                     Log.i("Date Stored ", String.valueOf(dateCode));

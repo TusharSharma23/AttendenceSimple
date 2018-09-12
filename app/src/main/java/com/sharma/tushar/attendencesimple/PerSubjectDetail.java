@@ -68,6 +68,7 @@ public class PerSubjectDetail extends AppCompatActivity {
                         values,
                         DataContract.SUBJECT_SUB_NAME + " = ?",
                         new String[]{detail.getSubject()});
+                db.close();
 
                 attended.setVisibility(View.VISIBLE);
                 total.setVisibility(View.VISIBLE);
@@ -137,5 +138,11 @@ public class PerSubjectDetail extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        NavUtils.navigateUpFromSameTask(PerSubjectDetail.this);
     }
 }

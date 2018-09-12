@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.sharma.tushar.attendencesimple.Data.DataContract;
 import com.sharma.tushar.attendencesimple.Data.DatabaseHelper;
@@ -63,6 +64,7 @@ public class Details extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(Details.this, " Task Cancelled", Toast.LENGTH_SHORT).show();
                 NavUtils.navigateUpFromSameTask(Details.this);
             }
         });
@@ -147,6 +149,7 @@ public class Details extends AppCompatActivity {
                     new String[]{todaysClass});
             cursor.close();
         }
+        Toast.makeText(Details.this, "Saved Successfully", Toast.LENGTH_SHORT).show();
         NavUtils.navigateUpFromSameTask(Details.this);
     }
 

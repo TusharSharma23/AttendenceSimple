@@ -44,24 +44,35 @@ public class SubjectAdapter extends ArrayAdapter {
 
         attended.setChecked(true);
         sub.setText(str);
+
+        attended.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String schedule = Details.todaysClasses[position];
+                while (Details.notAttendedClasses.toString().contains(schedule)) {
+                    Details.notAttendedClasses.deleteCharAt(Details.notAttendedClasses.indexOf(schedule));
+                }
+            }
+        });
         notAttended.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Details.notAttendedClasses.append(Details.todaysClasses[position]).append("!");
                 Log.i(" Added to code", Details.todaysClasses[position] + "!");
                 Log.i(" Buffer contains ", Details.notAttendedClasses.toString());
-
             }
         });
         noClass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                String schedule = Details.todaysClasses[position];
                 if(isChecked) {
-                    Details.noClass.append(Details.todaysClasses[position] + "!");
+                    Details.noClass.append(schedule).append("!");
                     attended.setVisibility(View.INVISIBLE);
                     notAttended.setVisibility(View.INVISIBLE);
                 } else {
+                    if(Details.noClass.toString().contains(schedule))
+                        Details.noClass.deleteCharAt(Details.noClass.indexOf(schedule));
                     attended.setVisibility(View.VISIBLE);
                     notAttended.setVisibility(View.VISIBLE);
                 }
