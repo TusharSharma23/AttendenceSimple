@@ -20,32 +20,13 @@
         android:layout_marginTop="@dimen/not_attended_right_margin"
         android:layout_marginBottom="@dimen/not_attended_right_margin"/>
 
-    <LinearLayout
+    <Switch
+        android:id="@+id/attended_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="@dimen/sub_left_margin"
+        android:layout_marginEnd="@dimen/not_attended_right_margin"
         android:layout_marginTop="@dimen/not_attended_right_margin"
-        android:layout_marginBottom="@dimen/not_attended_right_margin">
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/attended_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingRight="@dimen/sub_left_margin"/>
-
-            <RadioButton
-                android:id="@+id/not_attended_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingRight="@dimen/sub_left_margin"
-                android:layout_marginLeft="@dimen/sub_left_margin"/>
-        </RadioGroup>
-    </LinearLayout>
+        android:checked="true" />
 
 </RelativeLayout>

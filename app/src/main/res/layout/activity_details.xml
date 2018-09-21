@@ -18,19 +18,12 @@
             android:layout_marginStart="@dimen/sub_left_margin"/>
 
         <TextView
-            android:id="@+id/not_attended"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/not_attended"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/not_attended_right_margin"/>
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/attended"
-            android:layout_toStartOf="@id/not_attended"
-            android:layout_marginEnd="@dimen/attended_right_margin"/>
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/not_attended_right_margin"/>
+
 
     </RelativeLayout>
 
