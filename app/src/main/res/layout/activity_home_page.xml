@@ -5,14 +5,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".HomePage"
     android:fitsSystemWindows="true">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <CalendarView
-            android:id="@+id/calender_view"
+
+        <ListView
+            android:id="@+id/homepage_list_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </FrameLayout>

@@ -11,14 +11,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.sharma.tushar.attendencesimple.Data.DataContract;
 import com.sharma.tushar.attendencesimple.Data.DatabaseHelper;
+import com.sharma.tushar.attendencesimple.Data.SetDetailsAdapter;
 import com.sharma.tushar.attendencesimple.Data.SubjectAdapter;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Details extends AppCompatActivity {
 
@@ -42,9 +39,9 @@ public class Details extends AppCompatActivity {
         Intent intent = getIntent();
         int dateCode = 0;
         int day = 0;
-        if (intent.hasExtra(MainActivity.EXTRA_DATE_CODE) && intent.hasExtra(MainActivity.EXTRA_DAY)) {
-            dateCode = intent.getIntExtra(MainActivity.EXTRA_DATE_CODE, 0);
-            day = intent.getIntExtra(MainActivity.EXTRA_DAY, 1);
+        if (intent.hasExtra(CalenderDisplay.EXTRA_DATE_CODE) && intent.hasExtra(CalenderDisplay.EXTRA_DAY)) {
+            dateCode = intent.getIntExtra(CalenderDisplay.EXTRA_DATE_CODE, 0);
+            day = intent.getIntExtra(CalenderDisplay.EXTRA_DAY, 1);
         }
 
         //Initialize instance variables
@@ -55,17 +52,8 @@ public class Details extends AppCompatActivity {
         //Get ListView
         ListView listView = findViewById(R.id.subject_list);
 
-        //Get today's list code from database in String.
-        String todaysList = getList(day);
-
-        //Create array from code containing integers.
-        todaysClasses = todaysList.split("!");
-
-        //Create ArrayList containing subject names.
-        ArrayList arrayList = formList(todaysList);
-
         //Create adapter and attach to ListView
-        SubjectAdapter adapter = new SubjectAdapter(this, arrayList);
+        SubjectAdapter adapter = new SetDetailsAdapter().setupAdapter(Details.this, day, CalenderDisplay.CALENDER_PAGE);
         listView.setAdapter(adapter);
 
         //Submit button Task
@@ -86,47 +74,6 @@ public class Details extends AppCompatActivity {
                 NavUtils.navigateUpFromSameTask(Details.this);
             }
         });
-
-    }
-
-    //Get Code for today's class schedule from DAILY_SCHEDULE_TABLE.
-    private String getList(int day) {
-        SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor cursor = db.query(DataContract.DAILY_SCHEDULE_TABLE,
-                new String[]{DataContract.DAILY_SCHEDULE_CODE},
-                DataContract._ID + " = ?",
-                new String[]{String.valueOf(day)},
-                null,
-                null,
-                null);
-        cursor.moveToFirst();
-        String list = cursor.getString(cursor.getColumnIndex(DataContract.DAILY_SCHEDULE_CODE));
-        cursor.close();
-        return list;
-    }
-
-    //Convert code from integer to actual subject name.
-    private ArrayList formList(String string) {
-        SQLiteDatabase db = helper.getReadableDatabase();
-        String arr[] = string.split("!");
-
-        //Loop through each integer value and get respective string value from SUBJECT_TABLE
-        //and store in same position.
-        for (int i = 0; i < arr.length; i++) {
-            Cursor cursor = db.query(DataContract.SUBJECT_TABLE,
-                    new String[]{DataContract.SUBJECT_SUB_NAME},
-                    DataContract._ID + " = ?",
-                    new String[]{arr[i]},
-                    null,
-                    null,
-                    null);
-            cursor.moveToFirst();
-            arr[i] = cursor.getString(cursor.getColumnIndex(DataContract.SUBJECT_SUB_NAME));
-            cursor.close();
-        }
-
-        //Create arrayList from array containing subject name.
-        return new ArrayList<>(Arrays.asList(arr));
     }
 
     //Submit button actual working
@@ -168,7 +115,7 @@ public class Details extends AppCompatActivity {
                     null,
                     null);
             cursor.moveToFirst();
-            
+
             int total = cursor.getInt(cursor.getColumnIndex(DataContract.SUBJECT_TOT_CLASSES));
             total++;
             Log.i(" Total classes attended", total + "");
@@ -187,8 +134,5 @@ public class Details extends AppCompatActivity {
                     new String[]{todaysClass});
             cursor.close();
         }
-        Toast.makeText(Details.this, "Saved Successfully", Toast.LENGTH_SHORT).show();
-        NavUtils.navigateUpFromSameTask(Details.this);
     }
-
 }
