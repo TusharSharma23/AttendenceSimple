@@ -3,11 +3,13 @@ package com.sharma.tushar.attendencesimple;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CalendarView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -39,6 +41,15 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         });
+
+        NavigationView navigationView = findViewById(R.id.navigation_menu);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                return onOptionsItemSelected(item);
+            }
+        });
+
     }
 
     @Override
@@ -49,8 +60,16 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(MainActivity.this,Record.class );
-        startActivity(intent);
-        return true;
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.previous_record_menu_item:
+                Intent intent = new Intent(MainActivity.this, Record.class);
+                startActivity(intent);
+                return true;
+            case R.id.about_menu_item:
+                Toast.makeText(MainActivity.this, "Under Construction", Toast.LENGTH_SHORT).show();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
