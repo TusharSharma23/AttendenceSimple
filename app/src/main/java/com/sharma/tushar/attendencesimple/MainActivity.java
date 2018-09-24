@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -17,6 +20,7 @@ import java.util.GregorianCalendar;
 public class MainActivity extends AppCompatActivity {
 
     CalendarView calendarView;
+    private DrawerLayout drawerLayout;
 
     public static final String EXTRA_DATE_CODE = "ExtraData";
     public static final String EXTRA_DAY = "Day";
@@ -42,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
                 }
         });
 
+        drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.navigation_menu);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -49,6 +54,10 @@ public class MainActivity extends AppCompatActivity {
                 return onOptionsItemSelected(item);
             }
         });
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
     }
 
@@ -68,6 +77,9 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.about_menu_item:
                 Toast.makeText(MainActivity.this, "Under Construction", Toast.LENGTH_SHORT).show();
+                return true;
+            case android.R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
                 return true;
         }
         return super.onOptionsItemSelected(item);
