@@ -5,6 +5,8 @@
 
     <string name="records_title">Previous Records</string>
 
+    <string name="about_menu_item">About</string>
+
     <string name="per_subject_title">Subject Detail</string>
 
     <string name="subject">Subject name</string>
