@@ -73,7 +73,6 @@ public class HomePage extends AppCompatActivity {
                 return true;
             case R.id.about_menu_item:
                 Toast.makeText(HomePage.this, "Under Construction", Toast.LENGTH_SHORT).show();
-                drawerLayout.closeDrawer(GravityCompat.END);
                 return true;
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
