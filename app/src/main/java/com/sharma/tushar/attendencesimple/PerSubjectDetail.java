@@ -3,9 +3,9 @@ package com.sharma.tushar.attendencesimple;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,8 +18,9 @@ import com.sharma.tushar.attendencesimple.Data.DataContract;
 import com.sharma.tushar.attendencesimple.Data.DatabaseHelper;
 import com.sharma.tushar.attendencesimple.Data.SubjectPercent;
 
-import java.util.Objects;
-
+/**
+ *
+ */
 public class PerSubjectDetail extends AppCompatActivity {
 
     private TextView attended;

@@ -8,9 +8,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.sharma.tushar.attendencesimple.Data.SetDetailsAdapter;
-import com.sharma.tushar.attendencesimple.Data.SubjectAdapter;
+import com.sharma.tushar.attendencesimple.Adapters.SetDetailsAdapter;
+import com.sharma.tushar.attendencesimple.Adapters.SubjectAdapter;
 
+/**
+ * Display schedule as per day in intent.
+ */
 public class Details extends AppCompatActivity {
 
     @Override
@@ -18,12 +21,15 @@ public class Details extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
-        //Get selected date from intent.
+        //Get selected date and dateCode from intent.
         Intent intent = getIntent();
         int dateCode = -1;
         int day = 0;
+
+        //DateCode from CalenderDisplay class
         if (intent.hasExtra(CalenderDisplay.EXTRA_DATE_CODE))
             dateCode = intent.getIntExtra(CalenderDisplay.EXTRA_DATE_CODE, 0);
+        //Day from CalenderDisplay or HomePage class
         if (intent.hasExtra(CalenderDisplay.EXTRA_DAY))
             day = intent.getIntExtra(CalenderDisplay.EXTRA_DAY, 1);
 
@@ -40,6 +46,7 @@ public class Details extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Update database and return to previous page.
                 new SetDetailsAdapter(Details.this).performTask(finalDateCode);
                 NavUtils.navigateUpFromSameTask(Details.this);
             }
@@ -50,10 +57,9 @@ public class Details extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Return to previous page
                 NavUtils.navigateUpFromSameTask(Details.this);
             }
         });
     }
-
-
 }

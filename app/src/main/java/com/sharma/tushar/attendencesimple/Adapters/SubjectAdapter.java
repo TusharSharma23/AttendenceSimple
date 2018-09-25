@@ -1,4 +1,4 @@
-package com.sharma.tushar.attendencesimple.Data;
+package com.sharma.tushar.attendencesimple.Adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -19,13 +19,16 @@ import com.sharma.tushar.attendencesimple.R;
 
 import java.util.ArrayList;
 
+/**
+ * Adapter class for listView at Homepage and Details classes.
+ */
 public class SubjectAdapter extends ArrayAdapter {
 
     private ArrayList arrayList;
     private Context context;
     private int page;
 
-    public SubjectAdapter(@NonNull Context context, ArrayList arrayList, int page) {
+    SubjectAdapter(@NonNull Context context, ArrayList arrayList, int page) {
         super(context, 0, arrayList);
         this.context = context;
         this.arrayList = arrayList;
@@ -36,6 +39,7 @@ public class SubjectAdapter extends ArrayAdapter {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = convertView;
+        //Get Subject name from arrayList.
         String str = (String) arrayList.get(position);
         if(view == null)
             view = LayoutInflater.from(context).inflate(R.layout.subject_list_item, parent, false);
@@ -43,8 +47,10 @@ public class SubjectAdapter extends ArrayAdapter {
         final Switch attended = view.findViewById(R.id.attended_button);
         CheckBox noClass = view.findViewById(R.id.no_class);
 
+        //Update subject name in textView
         sub.setText(str);
 
+        //If calling class in Homepage, hide checkbox and switch.
         if (this.page == HomePage.HOME_PAGE) {
             attended.setVisibility(View.GONE);
             noClass.setVisibility(View.GONE);
@@ -56,6 +62,7 @@ public class SubjectAdapter extends ArrayAdapter {
     }
 
     private void addClickListeners(final Switch attended, CheckBox noClass, final int position) {
+        //Alter SetDetailsAdapter.notAttendedClasses StringBuffer for not attended classes.
         attended.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -72,6 +79,7 @@ public class SubjectAdapter extends ArrayAdapter {
             }
         });
 
+        //Alter SetDetailsAdapter.noClass if no class is there.
         noClass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

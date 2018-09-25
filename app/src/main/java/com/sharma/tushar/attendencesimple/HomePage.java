@@ -15,15 +15,30 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.sharma.tushar.attendencesimple.Data.SetDetailsAdapter;
-import com.sharma.tushar.attendencesimple.Data.SubjectAdapter;
+import com.sharma.tushar.attendencesimple.Adapters.SetDetailsAdapter;
+import com.sharma.tushar.attendencesimple.Adapters.SubjectAdapter;
 
 import java.util.Calendar;
 
+/**
+ * Display today's schedule along with two buttons
+ * <ul>
+ * <li>Attended all</li>
+ * <li>Attended some</li>
+ * </ul>
+ * <p>When 'attended all' button is clicked, save all attended in database.</p>
+ * <p>When 'Attended some' button is clicked, use @link Data.SetDetailsAdapter#performTask(-1)</p>
+ * If any of the buttons is clicked, hide both buttons to avoid multiple inputs.
+ */
 public class HomePage extends AppCompatActivity {
 
+    /**
+     *To slide drawerLayout in when menu button clicked
+     *and out when any other button clicked.
+     */
     private DrawerLayout drawerLayout;
 
+    //Used to create Subject adapter for this page.
     public static final int HOME_PAGE = 1;
 
     @Override
@@ -31,6 +46,7 @@ public class HomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
+        //Get today's day.
         Calendar calendar = Calendar.getInstance();
         final int day = calendar.get(Calendar.DAY_OF_WEEK) - 1;
 
@@ -38,10 +54,15 @@ public class HomePage extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.navigation_menu);
 
+        //If day is valid, display list and buttons
         if (day != 0 && day != 6) {
+            //Create and attach adapter
             SubjectAdapter adapter = new SetDetailsAdapter(HomePage.this).setupAdapter(day, HOME_PAGE);
             listView.setAdapter(adapter);
+
+            //Hide "No Class Today Message"
             findViewById(R.id.no_class_textview).setVisibility(View.INVISIBLE);
+
             final Button attended = findViewById(R.id.all_attended);
             final Button attendedSome = findViewById(R.id.some_attended);
 
@@ -49,6 +70,7 @@ public class HomePage extends AppCompatActivity {
             attended.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //Update database and hide buttons.
                     new SetDetailsAdapter(HomePage.this).performTask(-1);
                     attended.setVisibility(View.INVISIBLE);
                     attendedSome.setVisibility(View.INVISIBLE);
@@ -59,15 +81,17 @@ public class HomePage extends AppCompatActivity {
             attendedSome.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //Call @link Details class
                     Intent intent = new Intent(HomePage.this, Details.class);
                     intent.putExtra(CalenderDisplay.EXTRA_DAY, day);
                     startActivity(intent);
+                    //Hide buttons
                     attended.setVisibility(View.INVISIBLE);
                     attendedSome.setVisibility(View.INVISIBLE);
                 }
             });
-
         } else {
+            //Hide Relative Layout containing ListView and Buttons.
             findViewById(R.id.homepage_contents).setVisibility(View.INVISIBLE);
         }
 
@@ -78,6 +102,7 @@ public class HomePage extends AppCompatActivity {
             }
         });
 
+        //Display Menu button on toolbar.
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -95,10 +120,12 @@ public class HomePage extends AppCompatActivity {
         Intent intent;
         switch (id) {
             case R.id.previous_record_menu_item:
+                //If "Previous Records" menu item clicked, Open Record class.
                 intent = new Intent(HomePage.this, Record.class);
                 startActivity(intent);
                 return true;
             case R.id.about_menu_item:
+                //If "About" menu item clicked, Open dialog box and close drawer.
                 drawerLayout.closeDrawer(GravityCompat.START, true);
                 AlertDialog.Builder builder = new AlertDialog.Builder(HomePage.this);
                 builder.setMessage("Under Construction");
@@ -107,9 +134,11 @@ public class HomePage extends AppCompatActivity {
                 dialog.show();
                 return true;
             case android.R.id.home:
+                //If Menu button on toolbar clicked, open drawer.
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
             case R.id.open_calender:
+                //If Calender icon clicked, open CalenderDisplay class.
                 intent = new Intent(HomePage.this, CalenderDisplay.class);
                 startActivity(intent);
                 return true;

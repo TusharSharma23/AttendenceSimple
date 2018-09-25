@@ -3,15 +3,15 @@ package com.sharma.tushar.attendencesimple;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.sharma.tushar.attendencesimple.Adapters.RecordAdapter;
 import com.sharma.tushar.attendencesimple.Data.DataContract;
 import com.sharma.tushar.attendencesimple.Data.DatabaseHelper;
-import com.sharma.tushar.attendencesimple.Data.RecordAdapter;
 import com.sharma.tushar.attendencesimple.Data.SubjectPercent;
 
 import java.util.ArrayList;

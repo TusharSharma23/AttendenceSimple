@@ -1,4 +1,4 @@
-package com.sharma.tushar.attendencesimple.Data;
+package com.sharma.tushar.attendencesimple.Adapters;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,9 +7,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.sharma.tushar.attendencesimple.Data.DataContract;
+import com.sharma.tushar.attendencesimple.Data.DatabaseHelper;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Set contents for listView at HomePage and Details class.
+ * Used to get subject list from database and update database.
+ */
 public class SetDetailsAdapter {
 
     //List of classes not attended.
@@ -22,6 +29,11 @@ public class SetDetailsAdapter {
     private DatabaseHelper helper;
     private Context context;
 
+    /**
+     * Initialize values
+     *
+     * @param context refers to context of calling class
+     */
     public SetDetailsAdapter(Context context) {
         helper = new DatabaseHelper(context);
         this.context = context;
@@ -29,6 +41,12 @@ public class SetDetailsAdapter {
         noClass = new StringBuffer("");
     }
 
+    /**
+     * Create a SubjectAdapter for use in listView in Details and HomePage class.
+     * @param day day to get schedule of
+     * @param page calling page code
+     * @return SubjectAdapter to attach to listView
+     */
     public SubjectAdapter setupAdapter(int day, int page) {
 
         //Get today's list code from database in String.
@@ -43,7 +61,10 @@ public class SetDetailsAdapter {
         return new SubjectAdapter(context, arrayList, page);
     }
 
-    //Submit button actual working
+    /**
+     * Update database by altering attended, not attended and total values in SUBJECT_TABLE
+     * @param finalDateCode get DateCode for insertion in NOT_ATTENDED_TABLE
+     */
     public void performTask(int finalDateCode) {
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues values;
