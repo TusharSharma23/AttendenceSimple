@@ -7,6 +7,10 @@
 
     <string name="about_menu_item">About</string>
 
+    <string name="all_attended">All attended</string>
+
+    <string name="some_attended">Attended some</string>
+
     <string name="per_subject_title">Subject Detail</string>
 
     <string name="subject">Subject name</string>
