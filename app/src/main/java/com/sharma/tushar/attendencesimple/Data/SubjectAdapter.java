@@ -14,7 +14,6 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.sharma.tushar.attendencesimple.CalenderDisplay;
-import com.sharma.tushar.attendencesimple.Details;
 import com.sharma.tushar.attendencesimple.HomePage;
 import com.sharma.tushar.attendencesimple.R;
 
@@ -60,15 +59,15 @@ public class SubjectAdapter extends ArrayAdapter {
         attended.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                String schedule = Details.todaysClasses[position];
+                String schedule = SetDetailsAdapter.todaysClasses[position];
                 if (!isChecked) {
-                    Details.notAttendedClasses.append(Details.todaysClasses[position]).append("!");
-                    Log.i(" Added to code", Details.todaysClasses[position] + "!");
-                    Log.i(" Buffer contains ", Details.notAttendedClasses.toString());
-                } else if (Details.notAttendedClasses.toString().contains(schedule)) {
-                    Details.notAttendedClasses.deleteCharAt(Details.notAttendedClasses.indexOf(schedule));
+                    SetDetailsAdapter.notAttendedClasses.append(SetDetailsAdapter.todaysClasses[position]).append("!");
+                    Log.i(" Added to code", SetDetailsAdapter.todaysClasses[position] + "!");
+                    Log.i(" Buffer contains ", SetDetailsAdapter.notAttendedClasses.toString());
+                } else if (SetDetailsAdapter.notAttendedClasses.toString().contains(schedule)) {
+                    SetDetailsAdapter.notAttendedClasses.deleteCharAt(SetDetailsAdapter.notAttendedClasses.indexOf(schedule));
                     Log.i("Removed from code", "");
-                    Log.i(" Buffer contains ", Details.notAttendedClasses.toString());
+                    Log.i(" Buffer contains ", SetDetailsAdapter.notAttendedClasses.toString());
                 }
             }
         });
@@ -76,13 +75,13 @@ public class SubjectAdapter extends ArrayAdapter {
         noClass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                String schedule = Details.todaysClasses[position];
+                String schedule = SetDetailsAdapter.todaysClasses[position];
                 if(isChecked) {
-                    Details.noClass.append(schedule).append("!");
+                    SetDetailsAdapter.noClass.append(schedule).append("!");
                     attended.setVisibility(View.INVISIBLE);
                 } else {
-                    if(Details.noClass.toString().contains(schedule))
-                        Details.noClass.deleteCharAt(Details.noClass.indexOf(schedule));
+                    if (SetDetailsAdapter.noClass.toString().contains(schedule))
+                        SetDetailsAdapter.noClass.deleteCharAt(SetDetailsAdapter.noClass.indexOf(schedule));
                     attended.setVisibility(View.VISIBLE);
                 }
             }
