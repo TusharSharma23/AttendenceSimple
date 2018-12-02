@@ -4,9 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 
 import com.sharma.tushar.attendencesimple.Adapters.SetDetailsAdapter;
 import com.sharma.tushar.attendencesimple.Adapters.SubjectAdapter;
@@ -34,11 +35,12 @@ public class Details extends AppCompatActivity {
             day = intent.getIntExtra(CalenderDisplay.EXTRA_DAY, 1);
 
         //Get ListView
-        ListView listView = findViewById(R.id.subject_list);
+        RecyclerView subjectList = findViewById(R.id.subject_list);
 
         //Create adapter and attach to ListView
         SubjectAdapter adapter = new SetDetailsAdapter(Details.this).setupAdapter(day, CalenderDisplay.CALENDER_PAGE);
-        listView.setAdapter(adapter);
+        subjectList.setLayoutManager(new LinearLayoutManager(this));
+        subjectList.setAdapter(adapter);
 
         //Submit button Task
         Button btn = findViewById(R.id.submit_button);

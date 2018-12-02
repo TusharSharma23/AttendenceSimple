@@ -9,11 +9,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 
 import com.sharma.tushar.attendencesimple.Adapters.SetDetailsAdapter;
 import com.sharma.tushar.attendencesimple.Adapters.SubjectAdapter;
@@ -50,7 +51,7 @@ public class HomePage extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         final int day = calendar.get(Calendar.DAY_OF_WEEK) - 1;
 
-        ListView listView = findViewById(R.id.homepage_list_view);
+        RecyclerView subjectList = findViewById(R.id.homepage_list_view);
         drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.navigation_menu);
 
@@ -58,7 +59,8 @@ public class HomePage extends AppCompatActivity {
         if (day != 0 && day != 6) {
             //Create and attach adapter
             SubjectAdapter adapter = new SetDetailsAdapter(HomePage.this).setupAdapter(day, HOME_PAGE);
-            listView.setAdapter(adapter);
+            subjectList.setLayoutManager(new LinearLayoutManager(this));
+            subjectList.setAdapter(adapter);
 
             //Hide "No Class Today Message"
             findViewById(R.id.no_class_textview).setVisibility(View.INVISIBLE);
