@@ -108,8 +108,8 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectH
             CheckBox noClass = view.findViewById(R.id.no_class);
             //If calling class in Homepage, hide checkbox and switch.
             if (page == HomePage.HOME_PAGE) {
-                attended.setVisibility(View.GONE);
-                noClass.setVisibility(View.GONE);
+                attended.setVisibility(View.INVISIBLE);
+                noClass.setVisibility(View.INVISIBLE);
             } else if (page == CalenderDisplay.CALENDER_PAGE) {
                 addClickListeners(attended, noClass, position);
             }

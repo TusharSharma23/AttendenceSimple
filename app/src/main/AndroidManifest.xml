@@ -9,9 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".HomePage"
-            android:screenOrientation="portrait">
+        <activity android:name=".HomePage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,23 +19,19 @@
         <activity
             android:name=".Details"
             android:label="@string/EntryActivity"
-            android:parentActivityName=".CalenderDisplay"
-            android:screenOrientation="portrait" />
+            android:parentActivityName=".CalenderDisplay" />
         <activity
             android:name=".Record"
             android:label="@string/records_title"
-            android:parentActivityName=".HomePage"
-            android:screenOrientation="portrait" />
+            android:parentActivityName=".HomePage" />
         <activity
             android:name=".PerSubjectDetail"
             android:label="@string/per_subject_title"
-            android:parentActivityName=".Record"
-            android:screenOrientation="portrait" />
+            android:parentActivityName=".Record" />
         <activity
             android:name=".CalenderDisplay"
             android:label=""
-            android:parentActivityName=".HomePage"
-            android:screenOrientation="portrait" />
+            android:parentActivityName=".HomePage" />
     </application>
 
 </manifest>

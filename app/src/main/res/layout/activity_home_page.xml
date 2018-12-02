@@ -8,49 +8,54 @@
     android:fitsSystemWindows="true"
     tools:context=".HomePage">
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/no_class_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="No Classes Today"
-            android:textSize="20sp" />
+        android:layout_height="match_parent">
 
         <RelativeLayout
-            android:id="@+id/homepage_contents"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/homepage_list_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/no_class_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/homepage_list_view"
                 android:layout_centerInParent="true"
-                android:orientation="horizontal">
+                android:text="No Classes Today"
+                android:textSize="20sp" />
 
-                <Button
-                    android:id="@+id/all_attended"
+            <RelativeLayout
+                android:id="@+id/homepage_contents"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/homepage_list_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/all_attended" />
+                    android:layout_below="@id/homepage_list_view"
+                    android:layout_centerInParent="true"
+                    android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/some_attended"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/some_attended" />
-            </LinearLayout>
+                    <Button
+                        android:id="@+id/all_attended"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/all_attended" />
+
+                    <Button
+                        android:id="@+id/some_attended"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/some_attended" />
+                </LinearLayout>
+            </RelativeLayout>
         </RelativeLayout>
-    </RelativeLayout>
+    </ScrollView>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_menu"
