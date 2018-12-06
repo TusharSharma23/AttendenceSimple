@@ -12,7 +12,7 @@ import android.widget.ListView;
 import com.sharma.tushar.attendencesimple.Adapters.RecordAdapter;
 import com.sharma.tushar.attendencesimple.Data.DataContract;
 import com.sharma.tushar.attendencesimple.Data.DatabaseHelper;
-import com.sharma.tushar.attendencesimple.Data.SubjectPercent;
+import com.sharma.tushar.attendencesimple.HelperClasses.SubjectPercent;
 
 import java.util.ArrayList;
 

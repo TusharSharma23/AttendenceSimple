@@ -1,5 +1,8 @@
 package com.sharma.tushar.attendencesimple;
 
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,6 +21,8 @@ import android.widget.Button;
 
 import com.sharma.tushar.attendencesimple.Adapters.SetDetailsAdapter;
 import com.sharma.tushar.attendencesimple.Adapters.SubjectAdapter;
+import com.sharma.tushar.attendencesimple.HelperClasses.NotificationService;
+import com.sharma.tushar.attendencesimple.HelperClasses.NotificationUtil;
 
 import java.util.Calendar;
 
@@ -41,6 +46,7 @@ public class HomePage extends AppCompatActivity {
 
     //Used to create Subject adapter for this page.
     public static final int HOME_PAGE = 1;
+    private final long ONE_DAY = 86400000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +64,21 @@ public class HomePage extends AppCompatActivity {
         //If day is valid, display list and buttons
         if (day != 0 && day != 6) {
             displayTodaysClasses(subjectList, day);
+            NotificationUtil.setContext(this);
+            JobInfo.Builder jobInfoBuilder = new JobInfo.Builder(
+                    0,
+                    new ComponentName(this, NotificationService.class));
+            if (day != 5) {
+                //Today is working day
+                //Set notification for tomorrow
+                jobInfoBuilder.setPeriodic(100);
+            } else {
+                //Today is Friday
+                //Set Notification for Monday
+                jobInfoBuilder.setPeriodic(100);
+            }
+            JobScheduler scheduler = (JobScheduler) this.getSystemService(JOB_SCHEDULER_SERVICE);
+            scheduler.schedule(jobInfoBuilder.build());
         } else {
             //Hide Today's Layout
             findViewById(R.id.homepage_contents).setVisibility(View.INVISIBLE);

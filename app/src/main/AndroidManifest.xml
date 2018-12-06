@@ -32,6 +32,10 @@
             android:name=".CalenderDisplay"
             android:label=""
             android:parentActivityName=".HomePage" />
+
+        <service
+            android:name=".HelperClasses.NotificationService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
 
 </manifest>

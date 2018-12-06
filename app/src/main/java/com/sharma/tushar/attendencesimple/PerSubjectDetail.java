@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.sharma.tushar.attendencesimple.Data.DataContract;
 import com.sharma.tushar.attendencesimple.Data.DatabaseHelper;
-import com.sharma.tushar.attendencesimple.Data.SubjectPercent;
+import com.sharma.tushar.attendencesimple.HelperClasses.SubjectPercent;
 
 /**
  *

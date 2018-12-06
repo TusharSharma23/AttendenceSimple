@@ -1,4 +1,4 @@
-package com.sharma.tushar.attendencesimple.Data;
+package com.sharma.tushar.attendencesimple.HelperClasses;
 
 import java.io.Serializable;
 
