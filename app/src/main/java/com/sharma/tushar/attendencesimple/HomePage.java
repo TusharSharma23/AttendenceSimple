@@ -49,7 +49,7 @@ public class HomePage extends AppCompatActivity {
 
         //Get today's day.
         Calendar calendar = Calendar.getInstance();
-        final int day = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+        int day = calendar.get(Calendar.DAY_OF_WEEK) - 1;
 
         RecyclerView subjectList = findViewById(R.id.homepage_list_view);
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -57,43 +57,9 @@ public class HomePage extends AppCompatActivity {
 
         //If day is valid, display list and buttons
         if (day != 0 && day != 6) {
-            //Create and attach adapter
-            SubjectAdapter adapter = new SetDetailsAdapter(HomePage.this).setupAdapter(day, HOME_PAGE);
-            subjectList.setLayoutManager(new LinearLayoutManager(this));
-            subjectList.setAdapter(adapter);
-
-            //Hide "No Class Today Message"
-            findViewById(R.id.no_class_textview).setVisibility(View.INVISIBLE);
-
-            final Button attended = findViewById(R.id.all_attended);
-            final Button attendedSome = findViewById(R.id.some_attended);
-
-            //Attended button
-            attended.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //Update database and hide buttons.
-                    new SetDetailsAdapter(HomePage.this).performTask(-1);
-                    attended.setVisibility(View.INVISIBLE);
-                    attendedSome.setVisibility(View.INVISIBLE);
-                }
-            });
-
-            //Attended Some button
-            attendedSome.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //Call @link Details class
-                    Intent intent = new Intent(HomePage.this, Details.class);
-                    intent.putExtra(CalenderDisplay.EXTRA_DAY, day);
-                    startActivity(intent);
-                    //Hide buttons
-                    attended.setVisibility(View.INVISIBLE);
-                    attendedSome.setVisibility(View.INVISIBLE);
-                }
-            });
+            displayTodaysClasses(subjectList, day);
         } else {
-            //Hide Relative Layout containing ListView and Buttons.
+            //Hide Today's Layout
             findViewById(R.id.homepage_contents).setVisibility(View.INVISIBLE);
         }
 
@@ -106,6 +72,7 @@ public class HomePage extends AppCompatActivity {
 
         //Display Menu button on toolbar.
         ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
@@ -146,6 +113,44 @@ public class HomePage extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void displayTodaysClasses(RecyclerView subjectList, final int day) {
+        //Create and attach adapter
+        SubjectAdapter adapter = new SetDetailsAdapter(HomePage.this).setupAdapter(day, HOME_PAGE);
+        subjectList.setLayoutManager(new LinearLayoutManager(this));
+        subjectList.setAdapter(adapter);
+
+        //Hide "No Class Today Message"
+        findViewById(R.id.no_class_textview).setVisibility(View.INVISIBLE);
+
+        final Button attended = findViewById(R.id.all_attended);
+        final Button attendedSome = findViewById(R.id.some_attended);
+
+        //Attended button
+        attended.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Update database and hide buttons.
+                new SetDetailsAdapter(HomePage.this).performTask(-1);
+                attended.setVisibility(View.INVISIBLE);
+                attendedSome.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        //Attended Some button
+        attendedSome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Call @link Details class
+                Intent intent = new Intent(HomePage.this, Details.class);
+                intent.putExtra(CalenderDisplay.EXTRA_DAY, day);
+                startActivity(intent);
+                //Hide buttons
+                attended.setVisibility(View.INVISIBLE);
+                attendedSome.setVisibility(View.INVISIBLE);
+            }
+        });
     }
 
 }
