@@ -1,8 +1,8 @@
 package com.sharma.tushar.attendencesimple;
 
-import android.app.job.JobInfo;
-import android.app.job.JobScheduler;
-import android.content.ComponentName;
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,7 +21,6 @@ import android.widget.Button;
 
 import com.sharma.tushar.attendencesimple.Adapters.SetDetailsAdapter;
 import com.sharma.tushar.attendencesimple.Adapters.SubjectAdapter;
-import com.sharma.tushar.attendencesimple.HelperClasses.NotificationService;
 import com.sharma.tushar.attendencesimple.HelperClasses.NotificationUtil;
 
 import java.util.Calendar;
@@ -65,20 +64,32 @@ public class HomePage extends AppCompatActivity {
         if (day != 0 && day != 6) {
             displayTodaysClasses(subjectList, day);
             NotificationUtil.setContext(this);
-            JobInfo.Builder jobInfoBuilder = new JobInfo.Builder(
-                    0,
-                    new ComponentName(this, NotificationService.class));
+
+            Calendar localCalender = Calendar.getInstance();
+            localCalender.set(Calendar.HOUR_OF_DAY,
+                    6, 0);
+            Intent intent = new Intent(this, NotificationUtil.NotificationPublisher.class);
+            Notification notification = NotificationUtil.createNotification();
+            intent.putExtra(NotificationUtil.NotificationPublisher.NOTIFICATION_INTENT_EXTRA,
+                    notification);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+
+            AlarmManager alarmManager =
+                    (AlarmManager) getSystemService(ALARM_SERVICE);
+            alarmManager.setInexactRepeating(
+                    AlarmManager.RTC,
+                    localCalender.getTimeInMillis(),
+                    AlarmManager.INTERVAL_DAY,
+                    pendingIntent);
+
             if (day != 5) {
                 //Today is working day
                 //Set notification for tomorrow
-                jobInfoBuilder.setPeriodic(100);
             } else {
                 //Today is Friday
                 //Set Notification for Monday
-                jobInfoBuilder.setPeriodic(100);
             }
-            JobScheduler scheduler = (JobScheduler) this.getSystemService(JOB_SCHEDULER_SERVICE);
-            scheduler.schedule(jobInfoBuilder.build());
         } else {
             //Hide Today's Layout
             findViewById(R.id.homepage_contents).setVisibility(View.INVISIBLE);
