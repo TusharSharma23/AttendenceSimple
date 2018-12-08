@@ -5,6 +5,7 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.sharma.tushar.attendencesimple.Adapters.SetDetailsAdapter;
 import com.sharma.tushar.attendencesimple.Adapters.SubjectAdapter;
@@ -46,7 +48,7 @@ public class HomePage extends AppCompatActivity {
 
     //Used to create Subject adapter for this page.
     public static final int HOME_PAGE = 1;
-    private final long ONE_DAY = 86400000;
+    private boolean backPressed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +144,24 @@ public class HomePage extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (backPressed) {
+            super.onBackPressed();
+            return;
+        }
+
+        backPressed = true;
+        Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                backPressed = false;
+            }
+        }, 2000);
     }
 
     private void displayTodaysClasses(RecyclerView subjectList, final int day) {
